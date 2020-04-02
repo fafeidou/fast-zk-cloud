@@ -1,0 +1,17 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: zk-provider
+  cloud:
+    inetutils:
+      preferredNetworks:
+        - 10
+    zookeeper:
+      connect-string: 192.168.56.121:2181
+      discovery:
+        enabled: true
+        register: true
+        root: /micro-service/
+        instance-host: ${spring.cloud.client.ip-address}

@@ -1,0 +1,34 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*' #打开endpoint
+server:
+  port: 8083
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    inetutils:
+      preferredNetworks:
+        - 10
+    zookeeper:
+      connect-string: 192.168.56.121:2181
+      discovery:
+        enabled: true
+        register: true
+        root: /micro-service/
+        instance-host: ${spring.cloud.client.ip-address}
+    gateway:
+      discovery:
+        locator:
+          lower-case-service-id: true  #gateway可以通过开启以下配置来打开根据服务的serviceId来匹配路由,默认是false大写
+          enabled: true # 是否可以通过其他服务的serviceId来转发到具体的服务实例。默认为false
+      routes:
+        - id: zk-comsumer
+          uri: lb://zk-comsumer
+          predicates:
+            - Path=/zk-comsumer/**  # 如果请求地址满足/service-hi/**,则转发到service-hi服务
+          filters:
+            - StripPrefix=1 # 去除请求url中的/admin/service-hi/
+
