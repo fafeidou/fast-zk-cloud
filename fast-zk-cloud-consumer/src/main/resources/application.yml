@@ -9,7 +9,7 @@ spring:
       preferredNetworks:
         - 10
     zookeeper:
-      connect-string: 192.168.56.121:2181
+      connect-string: 192.168.56.121:2181,192.168.56.121:2182,192.168.56.121:2183
       discovery:
         enabled: true
         register: true
